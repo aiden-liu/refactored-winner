@@ -25,6 +25,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
 
+  // Dark mode toggle element
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+
+  // Dark mode functionality
+  function initializeDarkMode() {
+    // Check localStorage for saved preference
+    const darkModePreference = localStorage.getItem("darkMode");
+    
+    if (darkModePreference === "enabled") {
+      document.body.classList.add("dark-mode");
+      updateDarkModeIcon(true);
+    } else {
+      updateDarkModeIcon(false);
+    }
+  }
+
+  function updateDarkModeIcon(isDark) {
+    const icon = darkModeToggle.querySelector(".icon");
+    icon.textContent = isDark ? "☀️" : "🌙";
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    
+    // Save preference to localStorage
+    if (isDarkMode) {
+      localStorage.setItem("darkMode", "enabled");
+    } else {
+      localStorage.setItem("darkMode", "disabled");
+    }
+    
+    updateDarkModeIcon(isDarkMode);
+  }
+
+  // Add event listener for dark mode toggle
+  darkModeToggle.addEventListener("click", toggleDarkMode);
+
+  // Initialize dark mode on page load
+  initializeDarkMode();
+
   // Activity categories with corresponding colors
   const activityTypes = {
     sports: { label: "Sports", color: "#e8f5e9", textColor: "#2e7d32" },
